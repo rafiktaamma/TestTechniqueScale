@@ -1,6 +1,11 @@
-package model;
+package com.rafiktaamma.TestTechniqueScale.model;
 
-import exceptions.IllegalGrilleException;
+
+import com.rafiktaamma.TestTechniqueScale.exceptions.IllegalGrilleException;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class Grille {
 
@@ -8,13 +13,25 @@ public class Grille {
     private final byte chance_number;
 
     public Grille(byte[] numbers, byte chance_number) throws IllegalGrilleException {
-        if((numbers.length<=7) && (0 <= chance_number && chance_number <= 10) ){
+        if((numbers.length<=7) && (-1 <= chance_number && chance_number <= 10 && chance_number != 0 ) ){
             this.numbers = numbers;
             this.chance_number = chance_number;
         }
-        else throw new IllegalGrilleException();
+        else throw new IllegalGrilleException("Illegal grille : plus de 7 nombres ou nombre de chance illégal");
 
     }
+
+    public Grille(String grille) throws IllegalGrilleException {
+        byte[] array_grille = ArrayUtils.toPrimitive(Stream.of(grille.split(":"))
+                .map(Byte::parseByte)
+                .toArray(Byte[]::new));
+        if(array_grille.length==8){
+        this.numbers=  Arrays.copyOfRange(array_grille, 0, 7);
+        this.chance_number=array_grille[7];
+        }
+        else throw new IllegalGrilleException("Illegal grille : plus de 7 nombres ou nombre de chance illégal");
+    }
+
 
     public byte[] getNumbers() {
         return numbers;
@@ -51,4 +68,11 @@ public class Grille {
         return count;
     }
 
+    @Override
+    public String toString() {
+        return "Grille{" +
+                "numbers=" + Arrays.toString(numbers) +
+                ", chance_number=" + chance_number +
+                '}';
+    }
 }

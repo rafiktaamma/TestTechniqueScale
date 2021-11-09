@@ -1,4 +1,4 @@
-package exceptions;
+package com.rafiktaamma.TestTechniqueScale.exceptions;
 
 public class IllegalGrilleException extends  Exception {
 
