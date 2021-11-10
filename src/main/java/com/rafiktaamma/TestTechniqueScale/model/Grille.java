@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Grille implements Serializable {
+public class Grille {
 
-    private final byte[] numbers;
+    private final Byte[] numbers;
     private final byte chance_number;
 
-    public Grille(byte[] numbers, byte chance_number) throws IllegalGrilleException {
+    public Grille(Byte[] numbers, byte chance_number) throws IllegalGrilleException {
         if((numbers.length<=7) && (-1 <= chance_number && chance_number <= 10 && chance_number != 0 ) ){
             this.numbers = numbers;
             this.chance_number = chance_number;
@@ -23,18 +23,23 @@ public class Grille implements Serializable {
     }
 
     public Grille(String grille) throws IllegalGrilleException {
-        byte[] array_grille = ArrayUtils.toPrimitive(Stream.of(grille.split(":"))
+        /*byte[] array_grille = ArrayUtils.toPrimitive(Stream.of(grille.split(":"))
                 .map(Byte::parseByte)
-                .toArray(Byte[]::new));
+                .toArray(Byte[]::new));*/
+        Byte[] array_grille=Stream.of(grille.split(":"))
+                .map(Byte::parseByte)
+                .toArray(Byte[]::new);
         if(array_grille.length==8){
-        this.numbers=  Arrays.copyOfRange(array_grille, 0, 7);
+            // just our bytes
+
+        this.numbers= Arrays.copyOfRange(array_grille, 0, 7);;
         this.chance_number=array_grille[7];
         }
         else throw new IllegalGrilleException("Illegal grille : plus de 7 nombres ou nombre de chance illégal");
     }
 
 
-    public byte[] getNumbers() {
+    public Byte[] getNumbers() {
         return numbers;
     }
 
@@ -46,7 +51,7 @@ public class Grille implements Serializable {
      * @param grille La grille gagnante
      * @return le rang de la grille
      */
-    public byte getRange(Grille grille){
+    public Byte getRange(Grille grille){
         boolean withChanceNumber=(this.chance_number==grille.getChance_number());
         byte count=this.countCommonElement(grille.getNumbers());
         byte rang;
@@ -61,7 +66,7 @@ public class Grille implements Serializable {
         else rang=-1;
         return rang;
     }
-    private byte countCommonElement(byte[] numbers){
+    private Byte countCommonElement(Byte[] numbers){
         byte count=0;
         for (int i = 0; i < this.numbers.length; i++) {
             if(this.numbers[i]==numbers[i]) count++;

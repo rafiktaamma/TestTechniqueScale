@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -52,6 +53,7 @@ public class MainController {
         List<Gagnant> winners = null;
         try {
             winners = this.tirageService.getWinners(new File(path), new Grille(WiningGrille), rang);
+
         } catch (IllegalGrilleException e) {
             e.printStackTrace();
         }
@@ -61,8 +63,9 @@ public class MainController {
     }
 
     @GetMapping(value = "/test")
-    public byte[] test(){
-        return new byte[]{22,55,11};
+    public String test(){
+        byte[] ba2 = {1,2,3,4,5};
+        return Arrays.toString(ba2);
     }
 
 }
