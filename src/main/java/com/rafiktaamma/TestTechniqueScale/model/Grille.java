@@ -4,10 +4,11 @@ package com.rafiktaamma.TestTechniqueScale.model;
 import com.rafiktaamma.TestTechniqueScale.exceptions.IllegalGrilleException;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Grille {
+public class Grille implements Serializable {
 
     private final byte[] numbers;
     private final byte chance_number;

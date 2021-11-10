@@ -1,6 +1,8 @@
 package com.rafiktaamma.TestTechniqueScale.model;
 
-public class Gagnant {
+import java.io.Serializable;
+
+public class Gagnant implements Serializable {
     private final String name;
     private final Grille grille;
     private final Byte rang;

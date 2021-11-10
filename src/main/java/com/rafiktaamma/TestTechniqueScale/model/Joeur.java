@@ -4,9 +4,10 @@ package com.rafiktaamma.TestTechniqueScale.model;
 import com.rafiktaamma.TestTechniqueScale.exceptions.IllegalGrilleException;
 import com.rafiktaamma.TestTechniqueScale.exceptions.OutOfRangeGrilles;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Joeur {
+public class Joeur implements Serializable {
     private final String name;
     private final Grille[] grilles;
 
