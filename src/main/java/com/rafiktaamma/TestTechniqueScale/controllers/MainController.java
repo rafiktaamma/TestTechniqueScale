@@ -7,10 +7,12 @@ import com.rafiktaamma.TestTechniqueScale.model.Grille;
 import com.rafiktaamma.TestTechniqueScale.services.FileService;
 import com.rafiktaamma.TestTechniqueScale.services.TirageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,7 +56,10 @@ public class MainController {
         } catch (IllegalGrilleException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok(winners);
+        if(winners==null || winners.isEmpty()) throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Winners not found"
+        );
+        else return ResponseEntity.ok(winners);
     }
 
 
