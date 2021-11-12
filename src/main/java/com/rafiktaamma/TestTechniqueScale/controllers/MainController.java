@@ -28,23 +28,20 @@ public class MainController {
 
    @GetMapping("/")
     public String index(){
-       return "upload";
+       return "Working api";
    }
-/*
-    @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
-        fileService.uploadFile(file);
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/";
-    }*/
-
-    @PostMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE,
+    /**
+     * EndPoint permet d'avoir la liste des gagnants d'une compétion loto
+     * @param file fichier csv contenant les données des joueurs (name , grilles).
+     * @param rang le rang des gagnants souhaité
+     * @param WiningGrille la grille gagnante (7 numéros , un numéro chance)
+     * @return une liste des gagnantd (Répresenté par la classe gagnant)
+     * @throws IllegalGrilleException Lève une exception si le service n'as pas pu créer une grille à partir la chaine de caractéres fournit
+     */
+    @PostMapping(value = "/winners", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<List<Gagnant>> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Byte rang, @RequestParam("grille") String WiningGrille) throws IllegalGrilleException {
+    public ResponseEntity<List<Gagnant>> getWinners(@RequestParam("file") MultipartFile file, @RequestParam Byte rang, @RequestParam("grille") String WiningGrille) throws IllegalGrilleException {
 
         String path = fileService.uploadFile(file);
         System.out.println("the path is " + path);
@@ -57,16 +54,10 @@ public class MainController {
         } catch (IllegalGrilleException e) {
             e.printStackTrace();
         }
-        System.out.println(winners);
-        System.out.println(winners.get(0).getGrille().getNumbers().hashCode());
         return ResponseEntity.ok(winners);
     }
 
-    @GetMapping(value = "/test")
-    public String test(){
-        byte[] ba2 = {1,2,3,4,5};
-        return Arrays.toString(ba2);
-    }
+
 
 }
 

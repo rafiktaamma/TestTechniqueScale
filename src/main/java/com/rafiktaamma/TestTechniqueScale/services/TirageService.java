@@ -23,7 +23,7 @@ public class TirageService {
      * @param file fichier csv contenant les données des joueurs (name , grilles).
      * @param winingGrille la grille gagnante (7 numéros , un numéro chance)
      * @param rang le rang des gagnants souhaité
-     * @return
+     * @return une liste des gagnantd (Répresenté par la classe gagnant)
      */
     public List<Gagnant> getWinners(File file, Grille winingGrille, byte rang){
         List<Gagnant> gagnants=new ArrayList<>();

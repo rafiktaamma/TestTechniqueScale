@@ -13,6 +13,12 @@ public class Grille {
     private final Byte[] numbers;
     private final byte chance_number;
 
+    /**
+     * un construteur qui prends tous les arguments
+     * @param numbers
+     * @param chance_number
+     * @throws IllegalGrilleException si le fichier csv contient une erreur (joeur à spécifier plus de 7 numéros dans la grille ou (numéro dans la grille ou le numéro de chance non conforme), le contructeur léve un exception
+     */
     public Grille(Byte[] numbers, byte chance_number) throws IllegalGrilleException {
         if((numbers.length<=7) && (-1 <= chance_number && chance_number <= 10 && chance_number != 0 ) ){
             this.numbers = numbers;
@@ -22,6 +28,10 @@ public class Grille {
 
     }
 
+    /**
+     * un constructeur qui construit la grille en utilisant une chaine de characters de numéros (8 numéros séparés par des ":" , le dernier numéro répresente le numéro de chance)
+     * @throws IllegalGrilleException si le fichier csv contient une erreur (joeur à spécifier plus de 7 numéros dans la grille ou (numéro dans la grille ou le numéro de chance non conforme), le contructeur léve un exception
+     */
     public Grille(String grille) throws IllegalGrilleException {
         /*byte[] array_grille = ArrayUtils.toPrimitive(Stream.of(grille.split(":"))
                 .map(Byte::parseByte)
@@ -43,9 +53,15 @@ public class Grille {
         return numbers;
     }
 
+    /**
+     * Un Getter pour accéder au numéro de chance dans la grille
+     * @return byte chance_number
+     */
     public byte getChance_number() {
         return chance_number;
     }
+
+
     /**
      * Retourne le rang de la grille en comparant un grille de joeur avec la grille gagnante
      * @param grille La grille gagnante
