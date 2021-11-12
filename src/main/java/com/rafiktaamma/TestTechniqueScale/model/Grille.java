@@ -20,7 +20,7 @@ public class Grille {
      * @throws IllegalGrilleException si le fichier csv contient une erreur (joeur à spécifier plus de 7 numéros dans la grille ou (numéro dans la grille ou le numéro de chance non conforme), le contructeur léve un exception
      */
     public Grille(Byte[] numbers, byte chance_number) throws IllegalGrilleException {
-        if((numbers.length<=7) && (-1 <= chance_number && chance_number <= 10 && chance_number != 0 ) ){
+        if((numbers.length<=7) && (isGrilleValid(numbers)) && (-1 <= chance_number && chance_number <= 10 && chance_number != 0 ) ){
             this.numbers = numbers;
             this.chance_number = chance_number;
         }
@@ -33,13 +33,10 @@ public class Grille {
      * @throws IllegalGrilleException si le fichier csv contient une erreur (joeur à spécifier plus de 7 numéros dans la grille ou (numéro dans la grille ou le numéro de chance non conforme), le contructeur léve un exception
      */
     public Grille(String grille) throws IllegalGrilleException {
-        /*byte[] array_grille = ArrayUtils.toPrimitive(Stream.of(grille.split(":"))
-                .map(Byte::parseByte)
-                .toArray(Byte[]::new));*/
         Byte[] array_grille=Stream.of(grille.split(":"))
                 .map(Byte::parseByte)
                 .toArray(Byte[]::new);
-        if(array_grille.length==8){
+        if((array_grille.length==8) && (isGrilleValid(array_grille)) && ((-1 <= array_grille[7] && array_grille[7] <= 10 && array_grille[7] != 0 )) ){
             // just our bytes
 
         this.numbers= Arrays.copyOfRange(array_grille, 0, 7);;
@@ -96,5 +93,14 @@ public class Grille {
                 "numbers=" + Arrays.toString(numbers) +
                 ", chance_number=" + chance_number +
                 '}';
+    }
+
+    private boolean isGrilleValid(Byte[] numbers){
+      boolean valid=true;
+        for (Byte number:numbers
+             ) {
+           if(number>49 || number==0 || number<-1) valid=false;
+        }
+       return valid;
     }
 }

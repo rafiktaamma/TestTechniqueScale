@@ -39,7 +39,7 @@ public class MainController {
      * @return une liste des gagnantd (Répresenté par la classe gagnant)
      * @throws IllegalGrilleException Lève une exception si le service n'as pas pu créer une grille à partir la chaine de caractéres fournit
      */
-    @PostMapping(value = "/winners", consumes = {MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/api/winners", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<List<Gagnant>> getWinners(@RequestParam("file") MultipartFile file, @RequestParam Byte rang, @RequestParam("grille") String WiningGrille) throws IllegalGrilleException {
 
