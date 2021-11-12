@@ -28,10 +28,10 @@ public class FileService {
      */
     public String uploadFile(MultipartFile file) {
         Path copyLocation=null;
-        System.out.println(file.getContentType());
-        try {
-            if(file.getContentType()=="text/csv"){
 
+        try {
+            if(file.getContentType().equals("text/csv")){
+                System.out.println(file.getContentType());
                 copyLocation = Paths
                         .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
                 Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
