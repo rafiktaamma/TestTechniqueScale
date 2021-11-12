@@ -45,13 +45,22 @@ public class MainController {
             MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<List<Gagnant>> getWinners(@RequestParam("file") MultipartFile file, @RequestParam Byte rang, @RequestParam("grille") String WiningGrille) throws IllegalGrilleException {
 
-        String path = fileService.uploadFile(file);
+        String path = null;
         System.out.println("the path is " + path);
         System.out.println("the grille is " + new Grille(WiningGrille));
         System.out.println("the rang is " + rang);
         List<Gagnant> winners = null;
         try {
-            winners = this.tirageService.getWinners(new File(path), new Grille(WiningGrille), rang);
+            path = fileService.uploadFile(file);
+            if(path==null){
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "the file format should be text/csv"
+                );
+            }
+            else {
+                winners = this.tirageService.getWinners(new File(path), new Grille(WiningGrille), rang);
+
+            }
 
         } catch (IllegalGrilleException e) {
             e.printStackTrace();

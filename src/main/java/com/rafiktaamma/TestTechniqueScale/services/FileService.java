@@ -28,16 +28,20 @@ public class FileService {
      */
     public String uploadFile(MultipartFile file) {
         Path copyLocation=null;
+        System.out.println(file.getContentType());
         try {
-             copyLocation = Paths
-                    .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+            if(file.getContentType()=="text/csv"){
+
+                copyLocation = Paths
+                        .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+                Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new FileStorageException("Could not store file " + file.getOriginalFilename()
                     + ". Please try again!");
         }
-       return copyLocation.toString();
+       return copyLocation != null ? copyLocation.toString() : null;
     }
 }
 
